@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
+    namespace 'com.hilfritz.textscriptview'
+    compileSdkVersion 30
     buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.hilfritz.textscriptview"
         minSdkVersion 16
+
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -17,11 +19,47 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+repositories { google(); mavenCentral() }
+
+//dependencies {
+//    compile fileTree(dir: 'libs', include: ['*.jar'])
+//    testCompile 'junit:junit:4.12'
+//    compile 'com.android.support:appcompat-v7:24.0.0'
+//    compile project(':library')
+//}
+dependencies {
+    // Old:
+    // compile fileTree(dir: 'libs', include: ['*.jar'])
+    // compile files('libs/something.jar')
+    // compile project(':autocompletehistory')
+    // testCompile 'junit:junit:4.12'
+    // androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    // debugCompile ...
+    // releaseCompile ...
+    // provided ...
+    // compileOnly (keeps) / annotationProcessor (keeps)
+
+    // New:
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // or a specific jar:
+    // implementation files('libs/something.jar')
+
+    implementation project(':library')   // if you depend on a local module
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+
+    // If you had build-type specific deps:
+    // debugImplementation ...
+    // releaseImplementation ...
+
+    // If you previously used `provided`:
+    // compileOnly 'group:artifact:version'
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile project(':library')
-}
